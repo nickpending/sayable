@@ -15,7 +15,9 @@ from sayable import (
 class TestSayableAssistant(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures before each test method."""
-        self.test_config = {"sayable_system_prompt": "Test system prompt"}
+        self.test_config = {
+            "sayable_system_prompt": "Test system prompt"  # This matches what's in the code
+        }
         self.config_path = "test_config.yaml"
         # Store original env var if it exists
         self.original_api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -29,7 +31,7 @@ class TestSayableAssistant(unittest.TestCase):
             os.environ.pop("ANTHROPIC_API_KEY", None)
 
     @patch("anthropic.Anthropic")
-    @patch("sayable.load_config")
+    @patch("sayable.sayable.load_config")  # Updated to patch the correct path
     def test_initialization(self, mock_load_config, mock_anthropic):
         # Setup
         mock_load_config.return_value = self.test_config
@@ -46,7 +48,7 @@ class TestSayableAssistant(unittest.TestCase):
             SayableAssistant()
 
     @patch("anthropic.Anthropic")
-    @patch("sayable.load_config")
+    @patch("sayable.sayable.load_config")  # Updated to patch the correct path
     def test_transform_valid_input(self, mock_load_config, mock_anthropic):
         # Setup
         mock_load_config.return_value = self.test_config
@@ -60,7 +62,7 @@ class TestSayableAssistant(unittest.TestCase):
         self.assertEqual(result, "transformed text")
 
     @patch("anthropic.Anthropic")
-    @patch("sayable.load_config")
+    @patch("sayable.sayable.load_config")  # Updated to patch the correct path
     def test_transform_invalid_input(self, mock_load_config, mock_anthropic):
         # Setup
         mock_load_config.return_value = self.test_config
@@ -77,7 +79,7 @@ class TestSayableAssistant(unittest.TestCase):
             assistant.transform(None)
 
     @patch("anthropic.Anthropic")
-    @patch("sayable.load_config")
+    @patch("sayable.sayable.load_config")  # Updated to patch the correct path
     def test_rate_limiting(self, mock_load_config, mock_anthropic):
         # Setup
         mock_load_config.return_value = self.test_config
